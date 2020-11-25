@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> To-Do List </title>
+
+    <head>
+
+        <style>
+
+            * {
+                box-sizing: border-box;
+            }
+
+            .header {
+                font-size: 30px;
+                text-align: center;
+            }
+
+            .input-btn {
+                position: relative;
+                left: 50%;
+                transform: translateX(-32.5%);
+            }
+
+            .input-btn input[name=item] {
+                width: 50%;
+                font-size: 20px;
+                float: left;
+                padding: 10px;
+                border: 2px solid rgb(83, 224, 83);
+            }
+
+            input:focus {
+                color: white;
+                background-color: rgb(218, 187, 134);
+            }
+
+            .input-btn button {
+                width: 15%;
+                font-size: 20px;
+                float: left;
+                padding: 10px;
+                border: 2px solid rgb(83, 224, 83);
+                border-left: none;
+            }
+
+            button:focus {
+                background-color: rgb(130, 243, 196);
+            }
+
+            .content {
+                position: absolute;
+                width: 65%;
+                height: 100px;
+                top: 23%;
+                transform: translateX(26%);
+                font-size: 25px;
+            }
+
+            .content-setup {
+                padding: 10px;
+            }
+
+            .content p {
+                display: inline;
+            }
+
+            .content-img {
+                float: right;
+                transform: translateY(-3px);
+            }
+
+            .sticky-btn {
+                position: absolute;
+                top: 12.5%;
+                right: 10%;
+            }
+
+        </style>
+
+        <script src = "jquery-3.5.1.js" > </script>
+
+        <script>
+
+            function add_item() {
+
+                var itm = document.getElementById("item").value;
+
+                if(itm !== "")
+                {
+                    var div = document.createElement("div");
+                    $(div).addClass("content-setup");
+                    document.getElementById("a1").appendChild(div);
+
+                    var para = document.createElement("p");
+                    $(para).text(itm);
+                    div.appendChild(para);
+
+                    document.getElementById("item").value = "";
+
+                    var div_img = document.createElement("div");
+                    $(div_img).addClass("content-img");
+                    div.appendChild(div_img);
+
+                    var img1 = document.createElement("img");
+                    img1.setAttribute("src", "checked.png");
+                    img1.setAttribute("width", "25px");
+                    img1.setAttribute("height", "25px");
+                    img1.style.marginRight = "6px";
+                    div_img.appendChild(img1);
+                    img1.addEventListener("click", function(){$(para).css("text-decoration", "line-through");});
+
+                    var img2 = document.createElement("img");
+                    img2.setAttribute("src", "editFile.png");
+                    img2.setAttribute("width", "25px");
+                    img2.setAttribute("height", "25px");
+                    div_img.appendChild(img2);
+                    img2.addEventListener("click", function(){
+                        document.getElementById("item").value = $(para).text();
+                        $(div).remove();
+                    });
+
+                    var img3 = document.createElement("img");
+                    img3.setAttribute("src", "remove.png");
+                    img3.setAttribute("width", "25px");
+                    img3.setAttribute("height", "25px");
+                    div_img.appendChild(img3);
+                    img3.addEventListener("click", function(){$(div).remove()});
+                }
+            }
+
+            function clear_item() {
+                $(".content-setup").remove();
+            }
+
+        </script>
+
+    </head>
+
+    <body style="background-color: antiquewhite;">
+
+        <div class="header">
+            <p> To Do List </p>
+        </div>
+        <div class="input-btn">
+            <input type="text" name="item" id="item" placeholder="Name...">
+            <button type="submit" onclick="add_item()"> Add Item. </button>
+        </div>
+        <div class="content" id="a1">
+        </div>
+        <div class="sticky-btn">
+            <img src="clearAll.png" width="50px" height="50px" onclick="clear_item()">
+        </div>
+
+    </body>
+</html>
